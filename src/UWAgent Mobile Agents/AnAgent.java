@@ -8,7 +8,6 @@ public class AnAgent extends UWAgent implements Serializable {
         System.out.println( "Injected" );
         destination = args[0];
     }
-
     public AnAgent( ) { 
         System.out.println( "Injected" );
         destination = "localhost";
