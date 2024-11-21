@@ -6,21 +6,23 @@ import java.rmi.server.*;
 public class UnixServer extends UnicastRemoteObject implements ServerInterface { 
     private boolean print = false; 
  
-    public UnixServer( String print ) throws RemoteException { 
-        this.print = print.startsWith( "P" ); 
+    public UnixServer(String print) throws RemoteException { 
+        this.print = print.startsWith("P"); 
     } 
  
     public static void main( String args[] ) { 
-        if ( args.length != 2 ) { 
-            System.err.println( "usage: java UnixServer P/S port#" ); // print or silence                                                             
-            System.exit( -1 ); 
+        if (args.length != 2) { 
+            System.err.println( "Usage: java UnixServer P/S port#" ); // print or silence                                                             
+            System.exit(-1); 
         } 
+
         try { 
             UnixServer unixserver = new UnixServer( args[0] ); 
-            Naming.rebind( "rmi://localhost:" + args[1] + "/unixserver", unixserver ); 
-        } catch ( Exception e ) { 
-            e.printStackTrace( ); 
-            System.exit( 1 ); 
+            Naming.rebind("rmi://localhost:" + args[1] + "/unixserver", unixserver); 
+            
+        } catch (Exception exc) { 
+            exc.printStackTrace(); 
+            System.exit(1); 
         } 
     } 
  
