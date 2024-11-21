@@ -17,6 +17,12 @@ public class UnixAgent extends UWAgent implements Serializable {
         System.out.println("No arguments.");
     }
 
+    public UnixAgent(String[] args) {
+        // Set the print variable
+        // Init the itinerary server[]
+        // Init commands[]
+    }
+
     public void init() {
         // Record startTime
         // Memorize where this agent was injected
