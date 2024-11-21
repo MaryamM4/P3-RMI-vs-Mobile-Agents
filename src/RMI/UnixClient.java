@@ -6,14 +6,13 @@ import java.net.*; // InetAddress
 import UWAgent.*; 
 
 public class UnixClient {
-    boolean printCommandOutputs;
+    private boolean printCommandOutputs;
 
-    int port;
-    String[] servers;
-    String[] commands;
+    private int port;
+    private String[] servers;
+    private String[] commands;
 
-    Date startTime;
-    Vector<String> allOutputs;
+    private Vector<String> allOutputs;
 
     /**
      * Initailizes client and provides interaction interface.
@@ -131,7 +130,7 @@ public class UnixClient {
      * @param port
      * @return True if the connection was succesfful. 
      */
-    ServerInterface connect(String host, int port) {
+    private ServerInterface connect(String host, int port) {
         try {
             // Lookup server in RMI registry
             ServerInterface server = (ServerInterface) Naming.lookup("rmi://" + host + ":" + port + "/unixserver");
