@@ -24,24 +24,31 @@ public class UnixServer extends UnicastRemoteObject implements ServerInterface {
         } 
     } 
  
-    public Vector execute( String command ) { 
+    public Vector<String> execute(String command) { 
         Vector<String> output = new Vector<String>( ); 
         String line; 
+
         try { 
-            Runtime runtime = Runtime.getRuntime( ); 
-            Process process = runtime.exec( command ); 
+            Runtime runtime = Runtime.getRuntime(); 
+            Process process = runtime.exec(command); 
             InputStream input = process.getInputStream(); 
+
             BufferedReader bufferedInput 
-                = new BufferedReader( new InputStreamReader( input ) ); 
-            while ( ( line = bufferedInput.readLine( ) ) != null ) { 
-                if ( print ) 
-                    System.out.println( line ); 
-                output.addElement( line ); 
+                = new BufferedReader(new InputStreamReader(input)); 
+
+            while ((line = bufferedInput.readLine()) != null) { 
+                if (print) { 
+                    System.out.println(line); 
+                } 
+
+                output.addElement(line); 
             } 
-        } catch ( IOException e ) { 
-            e.printStackTrace( ); 
+
+        } catch (IOException exc) { 
+            exc.printStackTrace( ); 
             return output; 
         } 
+
         return output; 
     } 
 } 
