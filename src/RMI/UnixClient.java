@@ -88,7 +88,7 @@ public class UnixClient {
         // If P, print all command outputs at the end
         // Otherwise, print only the number of line recieved by the servers.    
         printCommandOutputs = args[0].equals("P");
-        int port = Integer.parseInt(args[1]);
+        port = Integer.parseInt(args[1]);
      
         int numServers = Integer.parseInt(args[2]);
         if (numServers < 1 || numServers > argc - 5) {
