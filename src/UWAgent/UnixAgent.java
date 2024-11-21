@@ -27,8 +27,8 @@ public class UnixAgent extends UWAgent implements Serializable {
         startTime = new Date(); 
 
         // Memorize where this agent was injected
-        InetAddress inetaddr = InetAddress.getLocalHost();
-        orgPlace = inetaddr.getHostAddress();
+        InetAddress inetaddr = InetAddress.getLocalHost(); 
+        orgPlace = inetaddr.getHostAddress();   // Hostname
 
         // Go to servers[0] and call unix()
         //hop(orgPlace, "result", ...);
@@ -43,15 +43,37 @@ public class UnixAgent extends UWAgent implements Serializable {
     }
 
     public void results() {
-        // print out results
-        // get the endTime
+        // Print out results
+
+        // Get the endTime
         Date endTime = new Date();
         long duration = endTime.getTime() - startTime.getTime();
     }
 
-    public Vector<String> execute(String command) {
-        Vector<String> output = new Vector<String>;
-        // Borrow from UnixServer's execute
-        return output
-    }
+    public Vector execute(String command) { 
+        Vector<String> output = new Vector<String>(); 
+        String line; 
+
+        try { 
+            Runtime runtime = Runtime.getRuntime(); 
+            Process process = runtime.exec(command); 
+            InputStream input = process.getInputStream(); 
+
+            BufferedReader bufferedInput 
+                = new BufferedReader(new InputStreamReader(input)); 
+
+            while ((line = bufferedInput.readLine()) != null) { 
+                if (print) {
+                    System.out.println(line);
+                } 
+                output.addElement(line); 
+            } 
+
+        } catch (IOException e) { 
+            e.printStackTrace(); 
+            return output; 
+        } 
+
+        return output; 
+    } 
 }
