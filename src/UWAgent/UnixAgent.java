@@ -24,9 +24,14 @@ public class UnixAgent extends UWAgent implements Serializable {
     }
 
     public void init() {
-        // Record startTime
+        startTime = new Date(); 
+
         // Memorize where this agent was injected
+        InetAddress inetaddr = InetAddress.getLocalHost();
+        orgPlace = inetaddr.getHostAddress();
+
         // Go to servers[0] and call unix()
+        //hop(orgPlace, "result", ...);
     }
 
     public void unix() {
@@ -40,6 +45,8 @@ public class UnixAgent extends UWAgent implements Serializable {
     public void results() {
         // print out results
         // get the endTime
+        Date endTime = new Date();
+        long duration = endTime.getTime() - startTime.getTime();
     }
 
     public Vector<String> execute(String command) {

@@ -68,8 +68,8 @@ public class UnixClient {
             System.out.println("count = " + outputCount);
         }
 
-        int duration = startTime.compareTo(endTime);
-        System.out.println("\nExecution Time = " + startTime.getTime() + " ms");
+        long duration = endTime.getTime() - startTime.getTime();
+        System.out.println("\nExecution Time = " + duration);
     }
 
     /**
