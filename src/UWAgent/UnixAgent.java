@@ -9,6 +9,9 @@ public class UnixAgent extends UWAgent implements Serializable {
     String[] servers;
     String[] commands;
 
+    Vector<String>[] allOutputs;
+    int outputCount;
+
     int index;
     String orgPlace;
     Date startTime;
@@ -60,6 +63,9 @@ public class UnixAgent extends UWAgent implements Serializable {
             commands[i] = args[i + 3 + numServers];
         }
 
+        allOutputs = new Vector[numServers * numCommands];
+        outputCount = 0;
+
         // Display outcome
         String option = "count";
         if (print) {
@@ -82,23 +88,57 @@ public class UnixAgent extends UWAgent implements Serializable {
         }
 
         // Go to servers[0] and call unix()
-        //hop(orgPlace, "result", ...);
+        index = 0;
+        hop(servers[0], "unix", null);
+
+        // hints2 (might have a mistake)
+        //hop(orgPlace, "results", null);
     }
 
     public void unix() {
-        // Execute all commands
-        // Store all outputs in allOutputs
+        // Execute all commands & store outputs in allOutputs
+        for (int i = 0; i < commands.length; i++) {
+            Vector<String> output = execute(commands[i]);
+            
+            //allOutputs[(index + 1) * i] = output;
+            allOutputs[index * commands.length + i] = output;
+
+            outputCount += output.size();
+        }
         
-        // Go to server[++i] and call unix if you stil have servers
-        // Otherwise, go back to orgPlace and call results()
+        // If there are next servers, go to server[++i] and call unix
+        if (++index < servers.length) {
+            hop(servers[index], "unix", null);
+
+        } else { // Otherwise, go back to orgPlace and call results()
+            hop(orgPlace, "results", null);
+        }
     }
 
     public void results() {
         // Print out results
+        if (print) {
+            for (int serverCount = 0; serverCount < servers.length; serverCount++) {
+                System.out.println("============================================================ ");
 
-        // Get the endTime
+                for (int commCount = 0; commCount < commands.length; commCount++) {
+                    System.out.println(servers[serverCount] + " command(" + commands[commCount] + "):.............................. ");
+                
+                    for (String output: allOutputs[serverCount * commands.length + commCount]) {
+                    //for (String output: allOutputs[(serverCount + 1) * outputCount]) {
+                        System.out.println(output);
+                    }
+                }
+            }
+
+        } else {
+            System.out.println("count = " + outputCount);
+        }
+
+        // Get the endTime and print the duration 
         Date endTime = new Date();
         long duration = endTime.getTime() - startTime.getTime();
+        System.out.println("\nExecution Time = " + duration);
     }
 
     public Vector execute(String command) { 
@@ -114,9 +154,11 @@ public class UnixAgent extends UWAgent implements Serializable {
                 = new BufferedReader(new InputStreamReader(input)); 
 
             while ((line = bufferedInput.readLine()) != null) { 
+                /*
                 if (print) {
                     System.out.println(line);
                 } 
+                */
                 output.addElement(line); 
             } 
 

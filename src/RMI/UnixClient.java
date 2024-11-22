@@ -58,16 +58,15 @@ public class UnixClient {
                 }
 
             } else {
-                System.out.println("UnixClient Error: Failed to connect to server '" + severName + "'. ");
+                System.out.println("UnixClient Error: Failed to connect to server '" + serverName + "'. ");
             }
         }
-
-        Date endTime = new Date();
 
         if (!printCommandOutputs) {
             System.out.println("count = " + outputCount);
         }
 
+        Date endTime = new Date();
         long duration = endTime.getTime() - startTime.getTime();
         System.out.println("\nExecution Time = " + duration);
     }
