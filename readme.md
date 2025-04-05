@@ -113,7 +113,7 @@ On the other hand, agent-based programming had a steeper learning curve since
 and checking (for example, return to orgPlace once done with all servers). 
 Agents are responsible for their state management and execution logic. 
 
-## Perfromance
+## Performance 
 Tests:
 - **Test 1:** Execute multiple commands (4 or 12 commands) at remote servers.
   This intends to see how RMI client/servers VS. UWAgent would run longer with more commands.
@@ -124,6 +124,7 @@ Tests:
 
 **Note: Results are the fastest among 5 executions.**
 ![RMI vs UWAgents Test Results](docs/test_results.png)
+
 _Note that performance may be impacted by variant testing times/locations, 
 as there wasn’t an opportunity to run all tests together with the still-ongoing power outages._
 
